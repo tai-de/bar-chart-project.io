@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bar Chart</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  </head>
+  <body>
+    <div id="chart"></div>
+      <script>
+        let chartData = [7,20,5,12,5,3,6];
+        let chartOptions = {
+          title_name: "My bar chart!!!",
+          title_size: '1.1em',
+          title_color: 'blue',
+          chart_width: 500,
+          chart_height: 500,
+          bar_color: 'yellow',
+          label_color: 'green',
+          bar_spacing: 2,
+          x_labels: [
+            "seven", "nine", "one", "three", "two", "eight", "six"
+          ],
+          y_interval: 5
+        };
+        let chartElement = "chart";
+
+        const drawBarChart = function(data, options, element) {
+          const maxValue = [...data].sort(function(a,b) {
+            return a - b;
+          }).reverse()[0]; ////// THIS IS THE MAX VALUE IN OUR ARRAY
+          let stepOne = Math.ceil(options.chart_height / maxValue)-1;
+          let stepTwo = Math.ceil(options.chart_height / maxValue);
+          const titleTemplate = $("<div/>")
+            .attr("id","title")
+            .addClass("chart-title")
+            .html(options.title_name)
+            .css({
+              color: options.title_color,
+              'font-size': options.title_size
+            });
+          const chartTemplate = $("<div/>")
+            .attr("id","chart-container")
+            .addClass("chart")
+            .css({
+              width: options.chart_width,
+              height: options.chart_height,
+              display: 'flex',
+              'align-items': 'flex-end',
+              border: '1px solid black',
+              background: 'repeating-linear-gradient(white, #eee '+options.chart_height / maxValue+'px)',
+            });
+            $('#'+element).append(titleTemplate, chartTemplate); // add template to page?
+            for(let i = 0; i < data.length; i++) {
+              let barHeight = data[i] / maxValue * 100;
+              let barWidth = options.chart_width / data.length;
+              $('#chart-container').append($("<div/>")
+                .attr("id",i)
+                .addClass("data-bar")
+                .html(data[i])
+                .css({
+                  display: 'inline-block',
+                  padding: '0px 2px',
+                  border: '1px solid black',
+                  'background-color': options.bar_color,
+                  'min-width': '50px',
+                  height: barHeight + '%',
+                  width: barWidth + '%',
+                  'margin-left': options.bar_spacing / 2 + '%',
+                  'margin-right': options.bar_spacing / 2 + '%'
+                }));
+            }
+        }
+
+        drawBarChart(chartData, chartOptions, chartElement); // draws chart based on static variables for debug
+
+      </script>
+  </body>
+</html>
+
+
