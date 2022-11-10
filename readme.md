@@ -1,59 +1,79 @@
-Functional Requirements
+Lighthouse Labs Stretch Project
 ===
 
-You should have a simple API to draw a bar chart. The function should be used by your HTML page to render the chart into your demo page. The signature of the function should be as follows:
+## Bar Chart API
+
+# About
+
+This project creates a scalable and customizable bar chart.
 
 `drawBarChart(data, options, element);`
 
-The data parameter will be the data the chart should work from Start with just an Array of numbers
-e.g. [1, 2, 3, 4, 5]
+Where:
 
-The `options` parameter should be an object which has options for the chart.
-e.g. `width` and `height` of the bar chart
+- *data* is an array of numerical values
+- *options* is an object of customization options (see below)
+- *element* is the targeted element ID from the page
 
-The `element` parameter should be a DOM element or jQuery element that the chart will get rendered into.
+# Screenshots
 
-Display Requirements
-===
+> Example showing the empty DIV setup\
+![HTML example](/screenshots/bar-chart-html-divs.png)
 
-## Bar Chart
-Display a list of single values, horizontally as a bar chart
-* Numerical values should also be displayed inside of the bar
-* The position of values should be customizable too:
-    * Top, centre or bottom of the bar.
+>Example of arguments placed in function\
+![Function example](/screenshots/bar-chart-html-functions.png)
 
-Bar sizes should be dependent on the data that gets passed in
-* Bar `width` should be dependent on the total amount of values passed.
-* Bar `height` should be dependent on the values of the data.
+>Live output & results\
+![Live output example](/screenshots/bar-chart-live-output.png)
 
-Bar properties that should be customizable:
-* Bar Colour
-* Label Colour
-* Bar spacing (space between bars)
-* Bar Chart axes
 
-X-axis should show labels for each data value
+# Additional features
 
-* Think about how you would need to structure your data to associate a label to each value
+- Data bars include **hover effects** (see chart 2, bar 2 in screenshots above
+- **y-axis** has dynamically-drawn background lines at correct intervals
 
-Y-axis should show ticks at certain values
+# Customization options
 
-* Think about where you would configure these values. Should they be part of the data or the options to the bar chart function.
+Example for the *objects* argument:
 
-The title of the bar chart should be able to be set and shown dynamically
+```
+{
+title_name: "Bar Chart",
+title_size: '1.5em',
+title_color: 'blue',
+chart_width: 750,
+chart_height: 500,
+bar_color: 'blue',
+bar_label_pos: 'center', /*bottom, top, or center*/
+bar_label_color: 'white',
+bar_spacing: 2 /*percent*/
+}
+```
 
-The title of the bar chart should also be customizable:
+| key             | description & formatting                    |
+|-----------------|---------------------------------------------|
+| title_name      | "bar chart name"                            |
+| title_size      | "value" (can be in em, px, etc)             |
+| title_color     | "color name, hex, rgb, rgba"                |
+| chart_width     | numerical value (pixels)                    |
+| chart_height    | numerical value (pixels)                    |
+| bar_color       | "color name, hex, rgb, rgba"                |
+| bar_label_pos   | "top, center, or bottom"                    |
+| bar_label_color | "color name, hex, rgb, rgba"                |
+| bar_spacing     | numerical value (percentage of chart width) |
 
-* Font Size
-* Font Colour
+# Known issues / bugs
 
-## Multiple Value (Stacked) bar charts
+- Only a single array of data can be processed by the function.
+  - Modifications of the current code were attempted, however due to the bars being added as DIV elements, I was unable to rework the code to stack multiple values in the time provided.
+- Background lines showing the **y-axis intervals** is hard-coded to display at every 1 step of the data value.
+  - This means datasets where values are high (example 2 in the screenshot) will have upwards of 200 lines being 'drawn'.
+  - Likewise, if the dataset includes non-integers, it will not render correctly.
 
-Allow the user to pass multiple values for each bar.
+# Resources & supporting documentation
 
-* Think about how you would need to structure this data compared to a single bar chart.
+External resources used to help create this library:
 
-This should also support all the features of the single bar chart, including
-
-* Customizable bar colours, per value
-* Customizable label colours
+- HTML & CSS: Previous knowledge
+- JavaScript: Lighthouse Labs, Udacity, MDN
+- jQuery: MDN, Web Dev Simplified (YouTube)

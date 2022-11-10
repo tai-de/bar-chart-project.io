@@ -8,77 +8,79 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   </head>
   <body>
-    <div id="chart"></div>
+    <div id="chart" style="margin-left: 25px;""></div>
+    <br />
+    <div id="chart2" style="margin-left: 25px;""></div>
       <script>
-        let chartData = [7,20,5,12,5,3,6];
-        let chartOptions = {
-          title_name: "My bar chart!!!",
-          title_size: '1.1em',
-          title_color: 'blue',
-          chart_width: 500,
-          chart_height: 500,
-          bar_color: 'yellow',
-          label_color: 'green',
-          bar_spacing: 2,
-          x_labels: [
-            "seven", "nine", "one", "three", "two", "eight", "six"
-          ],
-          y_interval: 5
-        };
-        let chartElement = "chart";
-
-        const drawBarChart = function(data, options, element) {
-          const maxValue = [...data].sort(function(a,b) {
-            return a - b;
-          }).reverse()[0]; ////// THIS IS THE MAX VALUE IN OUR ARRAY
-          let stepOne = Math.ceil(options.chart_height / maxValue)-1;
-          let stepTwo = Math.ceil(options.chart_height / maxValue);
+        const drawBarChart = function (data, options, element) {
+          const maxValue = Math.max(...[].concat(...data));
+          let steps = options.chart_height / (maxValue + Math.floor(maxValue / 10));
+          if (options.bar_label_pos == 'bottom') options.bar_label_pos = 'end';
+          let stack = false;
+          if (typeof data[0] === 'object') stack = true;
           const titleTemplate = $("<div/>")
-            .attr("id","title")
+            .attr("id", "title")
             .addClass("chart-title")
             .html(options.title_name)
             .css({
+              width: options.chart_width,
               color: options.title_color,
               'font-size': options.title_size
             });
           const chartTemplate = $("<div/>")
-            .attr("id","chart-container")
+            .attr("id", element + "-chart-container")
             .addClass("chart")
             .css({
               width: options.chart_width,
               height: options.chart_height,
-              display: 'flex',
-              'align-items': 'flex-end',
-              border: '1px solid black',
-              background: 'repeating-linear-gradient(white, #eee '+options.chart_height / maxValue+'px)',
+              background: 'repeating-linear-gradient(white, white, white, white, white, white, white, white , #eee ' + steps * Math.floor(maxValue / 10) + 'px)'
             });
-            $('#'+element).append(titleTemplate, chartTemplate); // add template to page?
-            for(let i = 0; i < data.length; i++) {
-              let barHeight = data[i] / maxValue * 100;
-              let barWidth = options.chart_width / data.length;
-              $('#chart-container').append($("<div/>")
-                .attr("id",i)
-                .addClass("data-bar")
-                .html(data[i])
-                .css({
-                  display: 'inline-block',
-                  padding: '0px 2px',
-                  border: '1px solid black',
-                  'background-color': options.bar_color,
-                  'min-width': '50px',
-                  height: barHeight + '%',
-                  width: barWidth + '%',
-                  'margin-left': options.bar_spacing / 2 + '%',
-                  'margin-right': options.bar_spacing / 2 + '%'
-                }));
-            }
+          $('#' + element).append(titleTemplate, chartTemplate);
+          for (let i = 0; i < data.length; i++) {
+            let barHeight = data[i] * steps;
+            let barWidth = options.chart_width / data.length;
+            $('#' + element + '-chart-container').append($("<div/>")
+              .attr("id", i)
+              .addClass("data-bar")
+              .html(data[i])
+              .css({
+                color: options.bar_label_color,
+                'background-color': options.bar_color,
+                height: barHeight + 'px',
+                width: barWidth + 'px',
+                'margin-left': options.bar_spacing / 2 + '%',
+                'margin-right': options.bar_spacing / 2 + '%',
+                'align-items': options.bar_label_pos
+              }));
+          }
         }
 
-        drawBarChart(chartData, chartOptions, chartElement); // draws chart based on static variables for debug
+        drawBarChart([7,15,5,16,5,3,6,1], {
+          title_name: "This is my test chart",
+          title_size: '1.5em',
+          title_color: 'blue',
+          chart_width: 750,
+          chart_height: 500,
+          bar_color: 'blue',
+          bar_label_pos: 'center',
+          bar_label_color: 'white',
+          bar_spacing: 2
+        }, "chart");
+
+
+        drawBarChart([105,210,175,88,201,146], {
+          title_name: "This is a second test chart to\
+          show that the function can run more than once!",
+          title_size: '0.75em',
+          title_color: 'green',
+          chart_width: 400,
+          chart_height: 200,
+          bar_color: 'yellow',
+          bar_label_pos: 'bottom',
+          bar_label_color: 'red',
+          bar_spacing: 1,
+        }, "chart2");
 
       </script>
   </body>
 </html>
-
-
-<!-- version two -->
