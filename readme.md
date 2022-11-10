@@ -29,7 +29,7 @@ Where:
 
 # Additional features
 
-- Data bars include **hover effects** (see chart 2, bar 2 in screenshots above
+- Data bars include **hover effects** (see chart 2, bar 2 in screenshots above)
 - **y-axis** has dynamically-drawn background lines at correct intervals
 
 # Customization options
@@ -44,7 +44,7 @@ title_color: 'blue',
 chart_width: 750,
 chart_height: 500,
 bar_color: 'blue',
-bar_label_pos: 'center', /*bottom, top, or center*/
+bar_label_pos: 'center',
 bar_label_color: 'white',
 bar_spacing: 2 /*percent*/
 }
