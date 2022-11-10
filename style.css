@@ -14,8 +14,8 @@ Bold 700 + italic */
 }
 
 :root {
-  --color-a: #777; //dark
-  --color-b: #eee; //background
+  --color-a: #777;
+  --color-b: #eee;
 }
 
 body {
